@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+
+<!--
+This is Ant's build.xml.  It contains the rules for compiling the project.
+You need Ant to compile this.  Get it from
+http://jakarta.apache.org/ant if you don't have it.
+-->
+<project name="subServer" default="welcome" basedir=".">
+
+	<!-- set global properties for this build -->
+	<property name="src" value="src" />
+	<property name="tools" value="tools" />
+
+	<property name="lib" value="lib" />
+	<property name="classes" value="classes" />
+	<property name="debug" value="true" />
+	<property name="app.version" value="1.0" />
+
+	<!-- set the compilation classpath -->
+	<path id="project.class.path">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="welcome">
+		<echo>* TARGET ***********************************</echo>
+		<echo>* ---------------------------------------- *</echo>
+		<echo>* compile      ------------ compile code</echo>
+		<echo>* subserver    ------------ run pagerank cached date</echo>
+	</target>
+
+	<target name="clean">
+		<delete dir="${classes}" />
+	</target>
+			
+	<!-- take care of any necessary setup -->
+	<target name="init" depends="clean">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${classes}" />
+	</target>
+
+	<!-- compile all the java classes -->
+	<target name="compile" depends="init" description="Just compile the java code">
+
+		<!-- Compile the java code from ${src} into ${classes} -->
+		<javac deprecation="on" debug="${debug}" srcdir="${src};" destdir="${classes}" source="1.6">
+			<classpath refid="project.class.path" />
+		</javac>
+
+		<copy todir="${classes}">
+			<fileset dir="${src}">
+				<include name="**/*.xml" />
+				<include name="**/*.ccf" />
+				<include name="**/*.properties" />
+				<include name="**/*.wsdd" />
+				<include name="resource/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="lockWrite" description="">
+		<java classname="com.eurika.thread.lock.Writer122214">
+			<classpath refid="project.class.path" />
+			<classpath>
+				<pathelement location="${classes}" />
+			</classpath>
+		</java>
+	</target>
+</project>
