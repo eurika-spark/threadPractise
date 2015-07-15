@@ -42,6 +42,7 @@ public class TestCommand  {
 		return cmdBlkQueue;
 	}
 	
+	// TODO Test  
 	public static void main(String[] args) {
 		TestCommand command = new TestCommand(3, 4);
 		for(int i=0; i< 3; i++) {
