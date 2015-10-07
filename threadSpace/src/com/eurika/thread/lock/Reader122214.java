@@ -15,7 +15,7 @@ class PricesInfo122214 {
              this. lock = new ReentrantReadWriteLock();  // The Only Hierarchy class of ReadWriteLock
       }
       
-      public double getPrice1() {
+      public double getPrice1() { 
              this. lock.readLock().lock();
              double value = this. price1;
              this. lock.readLock().unlock();
